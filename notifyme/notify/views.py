@@ -21,8 +21,8 @@ def push_notify(post):
     from pusher_push_notifications import PushNotifications
 
     beams_client = PushNotifications(
-        instance_id='12b1d692-e909-4c13-ab01-9aa733055d56',
-        secret_key='01108A9DEA0687F40809FEA53B2667FF8C9EDB40F6EF79118946BDE5816FC899',
+        instance_id='e5e2e6cd-9f3b-449e-a850-3931a46fedc0',
+        secret_key='6F61EE51B348051B01FF3C05DB4ED0009322EFBC70A0592CE89E422F21750255',
     )
 
     response = beams_client.publish_to_interests(
