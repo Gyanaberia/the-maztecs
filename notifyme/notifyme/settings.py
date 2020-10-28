@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'Hirenweb.apps.HirenwebConfig',
     'crispy_forms',
+    'notify',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

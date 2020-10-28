@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class='form-class'>
+    <form method='POST' action='.' enctype="multipart/form-data">{% csrf_token %}
+        <div class="form-group">
+            <input type="text" class="form-control form-control1"  name='ins' required placeholder="Type your name">
+            <input type="text" class="form-control form-control1"  name='cou' required placeholder="Type your course">
+            <button type="submit" class="btn submit1">Notify</button>
+
+    </form>
+</div>
+
+{% endblock content %}
