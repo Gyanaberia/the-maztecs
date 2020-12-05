@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% for course in obj_list %}
+    <h1>{{course.course_id}} - {{course.course_name}}</h1>
+{% endfor %}
+{% endblock %}
