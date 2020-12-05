@@ -10,9 +10,7 @@ def add_course(request):
         course = Course(instructor=instructor, course_name=course_name, course_id=course_id, secret_key=secret_key)
         course.save()
         return redirect('/courses/list')
-        print("vikas*******************")
     else:
-        print("m*******************")
         return render(request, 'courses.html')
 
 def list_courses(request):
