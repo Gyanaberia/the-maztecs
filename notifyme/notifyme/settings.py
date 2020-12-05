@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'courses.apps.CoursesConfig',
     'accounts.apps.AccountsConfig',
     'Hirenweb.apps.HirenwebConfig',
     'crispy_forms',
