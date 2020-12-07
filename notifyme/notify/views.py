@@ -15,7 +15,10 @@ def notify_create(request):
         post.save()
         return redirect('/notify/')
     else:
-        return render(request, 'notify.html')
+        if request.user.is_authenticated:
+            return render(request, 'notify.html')
+        else:
+            return redirect('/accounts/login')
 
 def push_notify(post):
     from pusher_push_notifications import PushNotifications

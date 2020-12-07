@@ -11,7 +11,10 @@ def add_course(request):
         course.save()
         return redirect('/courses/list')
     else:
-        return render(request, 'courses.html')
+        if request.user.is_authenticated:
+            return render(request, 'courses.html')
+        else:
+            return redirect('/accounts/login')
 
 def list_courses(request):
     courses=Course.objects.filter(instructor=request.user.username)
@@ -22,5 +25,7 @@ def list_courses(request):
     #         message.seen.add(message.user)
     #     if request.user not in message.seen.all():
     #         unseen.append(message)
-
-    return render (request,'list_courses.html',{"obj_list": courses})
+    if request.user.is_authenticated:
+        return render (request,'list_courses.html',{"obj_list": courses})
+    else:
+        return redirect('/accounts/login')
