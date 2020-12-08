@@ -3,5 +3,5 @@ from . import views
 from django.conf import settings
 
 urlpatterns = [
-    path('', views.notify_create, name='creation'),
+    path('<str:c_id>/', views.notify_create, name='creation'),
 ]

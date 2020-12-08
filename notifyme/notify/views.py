@@ -6,12 +6,12 @@ from django.http import JsonResponse
 from django.utils import timezone
 import json
 
-def notify_create(request):
+def notify_create(request, c_id):
     if request.method=='POST':
         instructor = request.POST['ins']
         course = request.POST['cou']
         post = Notification.objects.create(instructor = instructor,course = course)
-        push_notify(post)
+        push_notify(post, c_id)
         post.save()
         return redirect('/notify/')
     else:
@@ -20,7 +20,7 @@ def notify_create(request):
         else:
             return redirect('/accounts/login')
 
-def push_notify(post):
+def push_notify(post, c_id):
     from pusher_push_notifications import PushNotifications
 
     beams_client = PushNotifications(
@@ -29,7 +29,7 @@ def push_notify(post):
     )
 
     response = beams_client.publish_to_interests(
-        interests=['hello'],
+        interests=[c_id],
         publish_body={
             'apns': {
                 'aps': {

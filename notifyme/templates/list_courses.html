@@ -24,13 +24,15 @@
     <h1>Your courses:</h1>
     <br>
     <ol>
-    {% for course in obj_list %}
-        <a href="./../../notify"><h3><li>
+    {% for pair in obj_list %}
+    {% for course, link in pair%}
+        <a href={{link}}><h3><li>
             <div class="card bg-info text-white">
                 <div class="card-body"> {{course.course_id}} - {{course.course_name}} </div>
             </div>
         </a>
         <br>
+    {% endfor %}
     {% endfor %}
     </ol>
     

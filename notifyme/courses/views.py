@@ -18,6 +18,8 @@ def add_course(request):
 
 def list_courses(request):
     courses=Course.objects.filter(instructor=request.user.username)
+    zipped=[]
+    links=[]
     #print(request.user.username)
     # unseen = []
     # for message in messages:
@@ -26,6 +28,9 @@ def list_courses(request):
     #     if request.user not in message.seen.all():
     #         unseen.append(message)
     if request.user.is_authenticated:
-        return render (request,'list_courses.html',{"obj_list": courses})
+        for obj in courses:
+            links.append("./../../notify/"+obj.course_id+"/")
+            zipped.append(zip(courses, links))
+        return render (request,'list_courses.html',{"obj_list": zipped})
     else:
         return redirect('/accounts/login')

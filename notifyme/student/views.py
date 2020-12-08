@@ -9,7 +9,6 @@ from django.http import HttpResponse
 
 def register(request):
     if request.method=='POST':
-        response = HttpResponse()
         received_json_data=json.loads(request.body)
         students=Student.objects.all()
         if(True):
@@ -18,15 +17,13 @@ def register(request):
             password=received_json_data['password']
             stu=Student(username=username, email=email, password=password, course_id=None)
             stu.save()
-            response['userName']="blah"
-            response['email']=email
-            response['password']=password
-            response['validStudent']=True
+            return HttpResponse(
+            json.dumps({"validStudent": True}),
+            content_type="application/json"
+            )
 
         else:
-            response['userName']="blah blah"
-            response['email']=email
-            response['password']=password            
-            response['validStudent']=False
-        return response
-
+            return HttpResponse(
+            json.dumps({"validStudent": True}),
+            content_type="application/json"
+            )
