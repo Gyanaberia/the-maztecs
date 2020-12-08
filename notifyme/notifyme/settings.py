@@ -26,22 +26,25 @@ SECRET_KEY = 'jj^s9u_k(jn&mz3pj@ig*6wvo(h&qp)rkx$fd=zj73_*13iya+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.43.4']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'courses.apps.CoursesConfig',
     'accounts.apps.AccountsConfig',
     'Hirenweb.apps.HirenwebConfig',
     'crispy_forms',
     'notify',
+    'ta',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'student',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +58,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'notifyme.urls'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
 
 TEMPLATES = [
     {

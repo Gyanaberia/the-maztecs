@@ -6,6 +6,6 @@ class Notification(models.Model):
     course = models.CharField(max_length=100)
     created_at = models.DateTimeField(default=now)
     def __str__(self):
-        return f'{self.body}'
+        return f'{self.course}'
     class Meta:
         ordering = ['-created_at']

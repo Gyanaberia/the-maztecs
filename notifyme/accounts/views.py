@@ -5,5 +5,8 @@ from django.contrib import messages
 
 # Create your views here.
 def profile(request):
-    return render(request, 'profile.html')
+    if request.user.is_authenticated:
+        return render(request, 'profile.html')
+    else:
+        return redirect('/accounts/login')
     
