@@ -5,7 +5,6 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import StreamingHttpResponse
 from django.http import HttpResponse
-
 @csrf_exempt
 
 def register(request):
@@ -50,13 +49,14 @@ def login(request):
             json.dumps({"validStudent": False}),
             content_type="application/json"
             )
-
+            
+@csrf_exempt
 def new_course(request):
     if request.method=='POST':
         received_json_data=json.loads(request.body)
         courses=Course.objects.all()
-        course_id=received_json_data['userName']
-        secret_key=received_json_data['password']
+        course_id=received_json_data['courseId']
+        secret_key=received_json_data['courseKey']
         for course in courses:
             if(course.course_id==course_id):
                 if(course.secret_key==secret_key):

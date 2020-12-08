@@ -11,10 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.Message">
+
+        </activity>
         <activity
             android:name=".activity.NotifList"
             android:label="@string/title_activity_notif_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.SplashActivity"
             android:noHistory="true">
@@ -26,12 +29,12 @@
         </activity>
         <activity
             android:name=".activity.RegisterActivity"
-            android:noHistory="true"></activity>
+            android:noHistory="true" ></activity>
         <activity
             android:name=".activity.LoginActivity"
             android:noHistory="true"
-            android:windowSoftInputMode="adjustNothing"></activity>
-        <activity android:name=".activity.MainActivity"></activity>
+            ></activity>
+        <activity android:name=".activity.MainActivity" ></activity>
 
         <service android:name=".services.NotificationsMessagingService">
             <intent-filter android:priority="1">

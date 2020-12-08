@@ -21,9 +21,13 @@
                     {{ form|crispy }}
                 </fieldset>
                 <div class="form-style-6">
-                    <input type="text" name='ins' required placeholder="Type your name">
-                    <input type="text" name='cou' required placeholder="Type your course">
-                    <input type="text" name='msg' required placeholder="Write your message">
+                    <input type="text" name='ins' required placeholder="Type your username">
+                    <input type="text" name='body' required placeholder="Type your message">
+                    <input type="text" name='date' required placeholder="Type the deadline">
+                    <input type="radio" id="male" name="priority" value="normal">
+                    <label for="normal">Normal</label><br>
+                    <input type="radio" id="female" name="priority" value="high">
+                    <label for="high">High</label><br>
                     <input type="submit" value="Send Message">
                 </div>
             </form>

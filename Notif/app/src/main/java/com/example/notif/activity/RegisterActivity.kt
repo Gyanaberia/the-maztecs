@@ -12,13 +12,8 @@ import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity() {
-    /*private var textInputEmail: EditText? = null
-    private var textInputPassword: EditText? = null
-    private var textInputName: EditText?=null*/
+
     override fun onCreate(savedInstanceState: Bundle?) {
-       // textInputEmail=findViewById<EditText>(R.id.loginemail)
-        //textInputPassword=findViewById<EditText>(R.id.password)
-        //textInputName=findViewById<EditText>(R.id.username)
         setContentView(R.layout.activity_register)
         super.onCreate(savedInstanceState)
         supportActionBar!!.hide()
@@ -30,15 +25,25 @@ class RegisterActivity : AppCompatActivity() {
             if (!validateEmail(emailInput)  or !validatePassword(pssd) or !validateName(name)) {
                 Log.d("valid","fail")
                 return@setOnClickListener
-            }else if (validStudent(emailInput,pssd,name)){//need to correct this
-                Toast.makeText(this,"email already registered",Toast.LENGTH_LONG).show()
-                return@setOnClickListener
             }
             else{
-
-                Toast.makeText(this,"Register successful", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                val apiService = RestApiManager()
+                val userInfo = StudentInfo(
+                    email = emailInput,
+                    password = pssd,
+                    userName = name,
+                    validStudent = null,
+                )
+                apiService.addStudent(userInfo) {
+                    if(it?.validStudent==true){
+                        Toast.makeText(this,"Register successful", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                    else{
+                        Toast.makeText(this,"email already registered",Toast.LENGTH_LONG).show()
+                    }
+                }
             }
         }
         RestoLog.setOnClickListener{
@@ -57,6 +62,7 @@ class RegisterActivity : AppCompatActivity() {
             true
         }
     }
+
     private fun validatePassword(pssd:String): Boolean {
         return if (pssd.isEmpty()) {
             registerpassword?.error = "Field can't be empty"
@@ -66,6 +72,7 @@ class RegisterActivity : AppCompatActivity() {
             true
         }
     }
+
     private fun validateName(pssd:String): Boolean {
         return if (pssd.isEmpty()) {
             username?.error = "Field can't be empty"
@@ -75,7 +82,8 @@ class RegisterActivity : AppCompatActivity() {
             true
         }
     }
-    private fun validStudent(eMail:String,pssd: String,name:String):Boolean {
+
+   /* private fun validStudent(eMail:String,pssd: String,name:String):Boolean {
         val apiService = RestApiManager()
         val userInfo = StudentInfo(
             email = eMail,
@@ -83,16 +91,18 @@ class RegisterActivity : AppCompatActivity() {
             userName = name,
             validStudent = null,
         )
-        var invalid=false
+        var stud:StudentInfo?=null
         apiService.addStudent(userInfo) {
-            if(it?.validStudent==false){
-                invalid=true
-            }
+            stud=it
         }
-        return invalid
 
+        return if(stud?.validStudent==true){
+            true
+        } else{
+            false
+        }
 
-    }
+    }*/
 
 
 }

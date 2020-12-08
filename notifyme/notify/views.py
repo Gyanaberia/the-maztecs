@@ -9,18 +9,22 @@ import json
 def notify_create(request, c_id):
     if request.method=='POST':
         instructor = request.POST['ins']
-        course = request.POST['cou']
-        post = Notification.objects.create(instructor = instructor,course = course)
+        body = request.POST['body']
+        date = request.POST['date']
+        priority = str(request.POST["priority"])
+        print(body)
+        post = Notification.objects.create(instructor = instructor, body=body, date=date, priority=priority)
         push_notify(post, c_id)
         post.save()
-        return redirect('/notify/')
+        return redirect('/')
     else:
         if request.user.is_authenticated:
-            return render(request, 'notify.html')
+            return render(request,'notify.html')
         else:
             return redirect('/accounts/login')
 
-def push_notify(post, c_id):
+def push_notify(post,c_id):
+    print("hello")
     from pusher_push_notifications import PushNotifications
 
     beams_client = PushNotifications(
@@ -38,9 +42,19 @@ def push_notify(post, c_id):
             },
             'fcm': {
                 'notification': {
-                    'title': str(post.course),
-                    'body': 'You were added to a new course'
-                }   
+                    'title': c_id,
+                    'body': post.body
+                },
+                'data': {
+                    'title' : c_id,
+                    'notifId' : post.id,
+                    'date': post.date,
+                    'body': post.body,
+                    'course': c_id
+                }  
+            },
+            'android':{
+                'priority':post.priority
             }
         }
     )

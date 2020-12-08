@@ -28,44 +28,38 @@ class LoginActivity : AppCompatActivity() {
         loginButton.setOnClickListener{
             val emailInput=loginemail?.text.toString()
             val pssd=password?.text.toString()
+
             if (!validateEmail(emailInput)  or !validatePassword(pssd)) {
                 Toast.makeText(this,"some fields are empty",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            else if(validStudent(emailInput,pssd)){//need to correct this
-                Toast.makeText(this,"Invalid credentials",Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
             else{
-                sp.edit().putBoolean("logged",true).apply()
-                Toast.makeText(this,"Login successful",Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                //finish()
+                val apiService = RestApiManager()
+                val userInfo = StudentInfo(
+                    email = null,
+                    password = pssd,
+                    userName = emailInput,
+                    validStudent = null,
+                )
+                apiService.addStudent(userInfo) {
+                    if(it?.validStudent==true){
+                        sp.edit().putBoolean("logged",true).apply()
+                        Toast.makeText(this,"Login successful",Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                    else{
+                        Toast.makeText(this,"Invalid credentials",Toast.LENGTH_LONG).show()
+                    }
+                }
+
             }
         }
+
         logToRes.setOnClickListener{
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    private fun validStudent(eMail:String,pssd: String):Boolean {
-        val apiService = RestApiManager()
-        val userInfo = StudentInfo(
-            email = null,
-            password = pssd,
-            userName = eMail,
-            validStudent = null,
-        )
-        Log.d("login",userInfo.toString())
-        var invalid=false
-        apiService.addStudent(userInfo) {
-            if(it?.validStudent==false){
-                invalid=true
-            }
-        }
-        return invalid
     }
 
     private fun validateEmail(emailInput:String): Boolean {
@@ -76,8 +70,6 @@ class LoginActivity : AppCompatActivity() {
             true
         }
     }
-
-
     private fun validatePassword(pssd:String): Boolean {
         return if (pssd.isEmpty()) {
             password?.error = "Field can't be empty"
@@ -87,6 +79,4 @@ class LoginActivity : AppCompatActivity() {
             true
         }
     }
-
-
 }

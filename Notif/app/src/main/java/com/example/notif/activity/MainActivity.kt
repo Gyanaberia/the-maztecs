@@ -30,8 +30,7 @@ class MainActivity : AppCompatActivity() {
         PushNotifications.start(applicationContext, "e5e2e6cd-9f3b-449e-a850-3931a46fedc0")//changes made
         PushNotifications.addDeviceInterest("hello")
         parentLinearLayout = findViewById(R.id.parent_layout)
-      //  db=DataBaseHandler(this)
-//        db.close()
+        db=DataBaseHandler(this)
     }
 
     override fun onBackPressed() {
@@ -73,8 +72,7 @@ class MainActivity : AppCompatActivity() {
                 val sp = getSharedPreferences("login", MODE_PRIVATE)
                 sp.edit().putBoolean("logged", false).apply()
                 val intent = Intent(this, LoginActivity::class.java)
-                Toast.makeText(this, "logout successfully", Toast.LENGTH_SHORT)
-                    .show()//4 dont know what to write here either
+                Toast.makeText(this, "logout successfully", Toast.LENGTH_SHORT).show()//4 dont know what to write here either
                 startActivity(intent)
                 finish()
                 return true
@@ -111,17 +109,46 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if(registerToCourse(coursename, coursekey)){
-                //PushNotifications.addDeviceInterest(coursename)
+            /*if(registerToCourse(coursename, coursekey)){
+                PushNotifications.addDeviceInterest(coursename)
+                Log.d("pusher",coursename)
                 mAlertDialog.dismiss()
             }else{
                 return@setOnClickListener
+            }*/
+            else{
+                val apiService = RestApiManager()
+                val userInfo = CourseInfo(
+                    courseName = null,
+                    courseKey = coursekey,
+                    success = null,
+                    courseId = coursename,
+                )
+                apiService.addCourse(userInfo) {
+                    Log.d("fffff",it?.success.toString())
+                    if (it?.success ==true) {//have to change to boolean
+                        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater//to inflate
+                        val cor=inflater.inflate(R.layout.course, null)
+                        cor.cname.setText(coursename)
+                        cor.fullname.setText(it?.courseName)
+                        parentLinearLayout!!.addView(cor, parentLinearLayout!!.childCount - 1)
+                        db?.createTable(coursename)
+                        PushNotifications.addDeviceInterest(coursename)
+                        mAlertDialog.dismiss()
+                        Toast.makeText(applicationContext, "Registration successful", Toast.LENGTH_SHORT).show()
+
+                    } else {
+                        Log.d("fffdddd","inside2")
+                        Toast.makeText(applicationContext, "course-key mismatch", Toast.LENGTH_SHORT).show()
+                    }
+
+                }
             }
         }
         return
     }
 
-   private fun registerToCourse(cName: String, ckey: String):Boolean {
+  /* private fun registerToCourse(cName: String, ckey: String):Boolean {
         val apiService = RestApiManager()
         val userInfo = CourseInfo(
             courseName = null,
@@ -130,27 +157,28 @@ class MainActivity : AppCompatActivity() {
             courseId = cName,
         )
        Log.d("course",userInfo.toString())
-       var course=false
-        apiService.addCourse(userInfo) {
+       var course=true
+       apiService.addCourse(userInfo) {
+            Log.d("fffdddd",it?.success.toString())
             if (it?.success ==null) {//have to change to boolean
-                // it = newly added user parsed as response
-                // it?.id = newly added user ID
                 val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater//to inflate
                 val cor=inflater.inflate(R.layout.course, null)
                 cor.cname.setText(cName)
-               // cor.fullname.setText(it?.courseName)
+                cor.fullname.setText(it?.courseName)
                 parentLinearLayout!!.addView(cor, parentLinearLayout!!.childCount - 1)
-               // db?.createTable(cName)
+                db?.createTable(cName)
                 Toast.makeText(applicationContext, "Registration successful", Toast.LENGTH_SHORT).show()
-                //Log.d("pass", "Course Registered")
+                Log.d("fffdddd","inside1")
+
                 course=true
             } else {
+                Log.d("fffdddd","inside2")
                 Toast.makeText(applicationContext, "course-key mismatch", Toast.LENGTH_SHORT).show()
-                //Log.d("Error", "registering new course fail")
             }
         }
+       Log.d("fffdddd","Outside")
        return course
-    }
+    }*/
 
    fun openNotification(view: View?){
        val courseName=view?.cname!!.text.toString()

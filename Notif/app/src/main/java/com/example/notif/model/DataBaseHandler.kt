@@ -7,20 +7,16 @@ import android.database.sqlite.SQLiteOpenHelper
 val DATABASE="Course-Notify"
 
 
-class DataBaseHandler(context:Context ):SQLiteOpenHelper(context, DATABASE, null, 1) {
+class DataBaseHandler(context:Context?):SQLiteOpenHelper(context, DATABASE, null, 1) {
     private val NOTIF_ID="NOTIF_ID"
     private val DATE="DATE"
     private val BODY="BODY"
     private val TITLE="TITLE"
 
     override fun onCreate(db: SQLiteDatabase?) {
-       // val createTable = "CREATE TABLE IF NOT EXISTS " + course+ " (" + NOTIF_ID + " INTEGER PRIMARY KEY ," +TITLE+ "TEXT,"+ BODY + " TEXT," + DATE + " TEXT)"
-       // db?.execSQL(createTable)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-       /* val createTable = "CREATE TABLE IF NOT EXISTS " + course+ " (" + NOTIF_ID + " INTEGER PRIMARY KEY ," +TITLE+ "TEXT,"+ BODY + " TEXT," + DATE + " TEXT)"
-        db?.execSQL(createTable)*/
     }
     fun createTable(course:String){
         val db=this.writableDatabase
