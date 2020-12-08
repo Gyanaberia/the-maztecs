@@ -37,7 +37,7 @@ def push_notify(post):
                 'notification': {
                     'title': str(post.course),
                     'body': 'You were added to a new course'
-                }
+                }   
             }
         }
     )
