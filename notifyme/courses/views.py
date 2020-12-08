@@ -20,6 +20,7 @@ def list_courses(request):
     courses=Course.objects.filter(instructor=request.user.username)
     zipped=[]
     links=[]
+    tas=TA.objects.filter(instructor=request.user.username)
     #print(request.user.username)
     # unseen = []
     # for message in messages:
@@ -31,6 +32,6 @@ def list_courses(request):
         for obj in courses:
             links.append("./../../notify/"+obj.course_id+"/")
             zipped.append(zip(courses, links))
-        return render (request,'list_courses.html',{"obj_list": zipped})
+        return render (request,'list_courses.html',{"obj_list": zipped, "obj_list2":tas})
     else:
         return redirect('/accounts/login')

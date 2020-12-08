@@ -37,7 +37,10 @@
     </ol>
     
     <a href="./"><text>Click here to add more courses</text></a>
-    
+    {% for ta in obj_list %}
+    <h1>{{ta.TA_name}}</h1>
+    {% endfor %}
+
 </body>
 </html>
 
