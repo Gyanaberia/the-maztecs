@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from . import views
 
 urlpatterns = [
     path('', include('Hirenweb.urls')),
@@ -23,5 +22,6 @@ urlpatterns = [
     path('courses/', include('courses.urls')),
     path('accounts/', include('accounts.urls')),
     path('notify/', include('notify.urls')),
-    path('tas/', include('ta.urls'))
+    path('tas/', include('ta.urls')),
+    path('student/', include('student.urls')),
 ]

@@ -2,7 +2,12 @@
 {% load static %}
 {% block content %}
 
+<br>
+<h2> List of TAs: </h2>
+<ol>
 {% for ta in obj_list %}
-    <h3>{{ta.TA_name}}</h3>
+    <li>{{ta.TA_name}}</li>
 {% endfor %}
+</ol>
+
 {% endblock %}
