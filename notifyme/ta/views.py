@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from courses.models import *
 from .models import *
 
 def add_ta(request):
@@ -17,3 +18,8 @@ def list_tas(request):
     tas=TA.objects.filter(instructor=request.user.username)
 
     return render (request,'ta_list.html',{"obj_list": tas})
+
+def course_wise_talist(request):
+    tas=TA.objects.filter(instructor=request.user.username, course_id=request.course.course_id)
+
+    return render (request, 'ta_course_list.html', {"obj_list": tas})
